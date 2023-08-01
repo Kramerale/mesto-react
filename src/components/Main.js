@@ -13,6 +13,7 @@ function Main (props) {
     .then(cardData => {
       setCards(cardData);
     })
+    .catch(console.error)
   }, [])
 
   React.useEffect(() => {
@@ -22,9 +23,7 @@ function Main (props) {
       setUserDescription(userInfo.about);
       setUserAvatar(userInfo.avatar);
     })
-    .catch(err => {
-      console.log(err);
-    })
+    .catch(console.error)
   }, [])
 
   return (
@@ -45,9 +44,9 @@ function Main (props) {
 
       <section className="elements" aria-label="Фотокарточки пользователя">
         <ul className="elements__card-list">
-          {cards.map((card, id) =>
+          {cards.map(card =>
             <Card
-              key = {id}
+              key = {card._id}
               card = {card}
               name = {card.name}
               link = {card.link}
