@@ -45,8 +45,9 @@ function Main (props) {
 
       <section className="elements" aria-label="Фотокарточки пользователя">
         <ul className="elements__card-list">
-          {cards.map(card =>
+          {cards.map((card, id) =>
             <Card
+              key = {id}
               card = {card}
               name = {card.name}
               link = {card.link}

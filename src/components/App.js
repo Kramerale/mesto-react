@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -14,15 +13,15 @@ function App() {
   // const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
 
   function handleEditAvatarClick () {
-    document.querySelector('.popup_type_avatar').classList.add('popup_opened');
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleEditProfileClick () {
-    document.querySelector('.popup_type_profile').classList.add('popup_opened');
+    setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick () {
-    document.querySelector('.popup_type_add').classList.add('popup_opened');
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleCardClick (card) {
@@ -30,10 +29,10 @@ function App() {
   }
 
   function closeAllPopups () {
-    document.querySelector('.popup_type_avatar').classList.remove('popup_opened');
-    document.querySelector('.popup_type_profile').classList.remove('popup_opened');
-    document.querySelector('.popup_type_add').classList.remove('popup_opened');
-    document.querySelector('.popup_type_photo').classList.remove('popup_opened');
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setSelectedCard(null);
   }
 
   return (
