@@ -1,42 +1,21 @@
 import React from 'react';
-import api from '../utils/api';
 import Card from './Card';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function Main (props) {
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api.getInitialCards()
-    .then(cardData => {
-      setCards(cardData);
-    })
-    .catch(console.error)
-  }, [])
-
-  React.useEffect(() => {
-    api.getUserInfo()
-    .then(userInfo => {
-      setUserName(userInfo.name);
-      setUserDescription(userInfo.about);
-      setUserAvatar(userInfo.avatar);
-    })
-    .catch(console.error)
-  }, [])
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main>
       <section className="profile">
         <div className="profile__user">
           <button type="button" title="Обновить аватар" aria-label="Обновить аватар" className="profile__edit-avatar" onClick={props.onEditAvatar}>
-            <img alt="Аватар пользователя" className="profile__avatar" src={userAvatar} />
+            <img alt="Аватар пользователя" className="profile__avatar" src={currentUser.avatar} />
           </button>
           <div className="profile__info">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button type="button" title="Редактировать" aria-label="Редактировать" className="profile__edit-button" onClick={props.onEditProfile}></button>
-            <p className="profile__occupation">{userDescription}</p>
+            <p className="profile__occupation">{currentUser.about}</p>
           </div>
         </div>
         <button type="button" title="Добавить" aria-label="Добавить" className="profile__add-button" onClick={props.onAddPlace}></button>
@@ -44,7 +23,7 @@ function Main (props) {
 
       <section className="elements" aria-label="Фотокарточки пользователя">
         <ul className="elements__card-list">
-          {cards.map(card =>
+          {props.cards.map(card =>
             <Card
               key = {card._id}
               card = {card}
@@ -52,6 +31,8 @@ function Main (props) {
               link = {card.link}
               likes = {card.likes.length}
               onCardClick = {props.onCardClick}
+              onCardLike = {props.onCardLike}
+              onCardDelete = {props.onCardDelete}
             />
           )}
         </ul>
