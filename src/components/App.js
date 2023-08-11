@@ -14,21 +14,14 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState('');
+  const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-  // const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
 
   React.useEffect(() => {
-    api.getUserInfo()
-    .then(userInfo => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(res => {
+      const [userInfo, cardData] = res;
       setCurrentUser(userInfo);
-    })
-    .catch(console.error)
-  }, [])
-
-  React.useEffect(() => {
-    api.getInitialCards()
-    .then(cardData => {
       setCards(cardData);
     })
     .catch(console.error)
